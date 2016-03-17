@@ -135,8 +135,16 @@ func (pb *ProgressBar) SetUnits(units int) (bar *ProgressBar) {
 	return
 }
 
+// Return true if finished
+func (pb *ProgressBar) Finished() bool {
+	return pb.isFinish
+}
+
 // End print
 func (pb *ProgressBar) Finish() {
+	if pb.isFinish {
+		return
+	}
 	pb.isFinish = true
 	pb.write(atomic.LoadInt64(&pb.current))
 	if !pb.NotPrint {
